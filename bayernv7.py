@@ -70,26 +70,24 @@ def abrir_imagen_con_transparencia(path, size):
     imagen = Image.open(path)
     if imagen.mode != 'RGBA':
         imagen = imagen.convert('RGBA')
-    # Redimensionar la imagen
+    
     imagen = imagen.resize(size, Image.ANTIALIAS)
     return imagen
 
 def mostrar_control_semaforos():
     
-    # Cargar la imagen base
+    
     base_image_path = r"C:\Users\wgons\Downloads\bayern\calle.jpeg"
     base_image = Image.open(base_image_path)
 
-    # Tamaño de las imágenes de los semáforos
-    semaforo_size = (50, 50)  # Ajusta el tamaño según tus necesidades
+    semaforo_size = (50, 50)  
 
-    # Rutas de las imágenes de los semáforos
+    
     semaforo_verde_path = r"C:\Users\wgons\Downloads\bayern\verde2.png"
     semaforo_rojo_path = r"C:\Users\wgons\Downloads\bayern\rojo2.png"
     semaforo_verde = abrir_imagen_con_transparencia(semaforo_verde_path, semaforo_size)
     semaforo_rojo = abrir_imagen_con_transparencia(semaforo_rojo_path, semaforo_size)
 
-    # Posiciones de los semáforos en la imagen base
     semaforo_positions = [(600, 380), (380, 400), (490, 600), (480, 200)]
 
     while True:
@@ -98,25 +96,25 @@ def mostrar_control_semaforos():
             traffic_light = datos.get("trafficLight", 0)
             semaforos = ["Semáforo 1", "Semáforo 2", "Semáforo 3", "Semáforo 4"]
 
-            # Crear una copia de la imagen base
+            
             image_with_semaforos = base_image.copy()
 
-            # Superponer las imágenes de los semáforos
+           
             for i, pos in enumerate(semaforo_positions, start=1):
                 if i == traffic_light:
                     image_with_semaforos.paste(semaforo_verde, pos, semaforo_verde)
                 else:
                     image_with_semaforos.paste(semaforo_rojo, pos, semaforo_rojo)
 
-            # Mostrar la imagen en Streamlit
+           
             st.image(image_with_semaforos, use_column_width=True)
 
-            # Esperar 5 segundos antes de actualizar
-            time.sleep(5)
+            
+            time.sleep(2)
             st.experimental_rerun()
         else:
             st.warning("No se pudo obtener datos del servidor.")
-            time.sleep(5)
+            time.sleep(2)
             st.experimental_rerun()
 
 
